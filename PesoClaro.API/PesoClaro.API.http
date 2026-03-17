@@ -1,0 +1,6 @@
+@PesoClaro.API_HostAddress = http://localhost:5286
+
+GET {{PesoClaro.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
