@@ -1,1 +1,113 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-titulo">
+      <h1>PesoClaro</h1>
+      <span class="saludo">Hola, {{ nombreUsuario }}</span>
+    </div>
+    <button mat-button (click)="logout()">Cerrar sesión</button>
+  </div>
+
+  <!-- Cargando -->
+  <div *ngIf="cargando" class="cargando">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+
+  <div *ngIf="!cargando && patrimonio">
+
+    <!-- Patrimonio neto -->
+    <mat-card class="card-patrimonio">
+      <mat-card-content>
+        <p class="label-patrimonio">Tu patrimonio neto hoy</p>
+        <h2 class="numero-patrimonio" [class]="colorPatrimonio">
+          {{ patrimonio.patrimonioNeto | currency:'MXN':'symbol-narrow':'1.2-2' }}
+        </h2>
+        <p class="label-secundario">
+          Activos: {{ patrimonio.totalActivos | currency:'MXN':'symbol-narrow':'1.2-2' }} —
+          Deudas: {{ patrimonio.totalDeudas | currency:'MXN':'symbol-narrow':'1.2-2' }}
+        </p>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Métricas -->
+    <div class="grid-metricas">
+      <mat-card class="card-metrica">
+        <mat-card-content>
+          <p class="metrica-label">Liquidez disponible</p>
+          <p class="metrica-valor">
+            {{ patrimonio.totalLiquidez | currency:'MXN':'symbol-narrow':'1.2-2' }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="card-metrica">
+        <mat-card-content>
+          <p class="metrica-label">Inversiones</p>
+          <p class="metrica-valor">
+            {{ patrimonio.totalInversiones | currency:'MXN':'symbol-narrow':'1.2-2' }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="card-metrica">
+        <mat-card-content>
+          <p class="metrica-label">Rendimiento mensual</p>
+          <p class="metrica-valor positivo">
+            +{{ patrimonio.rendimientoMensualTotal | currency:'MXN':'symbol-narrow':'1.2-2' }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="card-metrica">
+        <mat-card-content>
+          <p class="metrica-label">Costo deudas / mes</p>
+          <p class="metrica-valor negativo">
+            -{{ patrimonio.costoMensualDeudas | currency:'MXN':'symbol-narrow':'1.2-2' }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Rendimiento neto -->
+    <mat-card class="card-rendimiento">
+      <mat-card-content>
+        <p class="metrica-label">Rendimiento neto del mes</p>
+        <p class="metrica-valor" [class]="colorRendimiento">
+          {{ patrimonio.rendimientoNeto | currency:'MXN':'symbol-narrow':'1.2-2' }}
+        </p>
+        <p class="label-secundario">
+          Lo que ganas menos lo que te cuestan tus deudas cada mes
+        </p>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Consejos -->
+    <div *ngIf="patrimonio.consejos.length > 0">
+      <h3 class="seccion-titulo">Consejos para ti</h3>
+      <mat-card *ngFor="let consejo of patrimonio.consejos"
+                class="card-consejo"
+                [class]="'consejo-' + consejo.tipo.toLowerCase()">
+        <mat-card-content>
+          <div class="consejo-header">
+            <mat-chip [class]="'chip-' + consejo.tipo.toLowerCase()">
+              {{ consejo.tipo }}
+            </mat-chip>
+            <span *ngIf="consejo.impactoMensual > 0" class="impacto">
+              Ahorro: +{{ consejo.impactoMensual | currency:'MXN':'symbol-narrow':'1.2-2' }}/mes
+            </span>
+          </div>
+          <p class="consejo-mensaje">{{ consejo.mensaje }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Acciones -->
+    <div class="acciones">
+      <button mat-raised-button color="primary" (click)="irACuentas()">
+        Ver mis cuentas
+      </button>
+    </div>
+
+  </div>
+</div>

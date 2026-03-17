@@ -1,0 +1,125 @@
+.dashboard-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 24px;
+  color: #00796b;
+}
+
+.saludo {
+  font-size: 14px;
+  color: #666;
+}
+
+.cargando {
+  display: flex;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.card-patrimonio {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+.label-patrimonio {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.numero-patrimonio {
+  font-size: 48px;
+  font-weight: 700;
+  margin: 0.5rem 0;
+}
+
+.numero-patrimonio.positivo { color: #00796b; }
+.numero-patrimonio.negativo { color: #e53935; }
+
+.label-secundario {
+  font-size: 13px;
+  color: #888;
+  margin-top: 0.5rem;
+}
+
+.grid-metricas {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.card-metrica {
+  text-align: center;
+}
+
+.metrica-label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.metrica-valor {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.metrica-valor.positivo { color: #00796b; }
+.metrica-valor.negativo { color: #e53935; }
+
+.card-rendimiento {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.seccion-titulo {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 1.5rem 0 0.75rem;
+}
+
+.card-consejo {
+  margin-bottom: 0.75rem;
+  border-left: 4px solid #00796b;
+}
+
+.consejo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.impacto {
+  font-size: 13px;
+  font-weight: 600;
+  color: #00796b;
+}
+
+.consejo-mensaje {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.acciones {
+  margin-top: 2rem;
+  text-align: center;
+}
