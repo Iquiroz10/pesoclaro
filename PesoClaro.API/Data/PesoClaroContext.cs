@@ -10,6 +10,7 @@ public class PesoClaroContext : DbContext
 
     public DbSet<Usuario> Usuarios { get; set; }
     public DbSet<Cuenta> Cuentas { get; set; }
+    public DbSet<Movimiento> Movimientos { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -23,6 +24,7 @@ public class PesoClaroContext : DbContext
             .HasOne(c => c.Usuario)
             .WithMany(u => u.Cuentas)
             .HasForeignKey(c => c.UsuarioId);
+        
 
         // Precisión de decimales para dinero
         modelBuilder.Entity<Cuenta>()
@@ -32,5 +34,21 @@ public class PesoClaroContext : DbContext
         modelBuilder.Entity<Cuenta>()
             .Property(c => c.TasaAnual)
             .HasPrecision(5, 2);
+
+        // Un usuario tiene muchos movimientos
+        modelBuilder.Entity<Movimiento>()
+            .HasOne(m => m.Usuario)
+            .WithMany(u => u.Movimientos)
+            .HasForeignKey(m => m.UsuarioId);
+
+        // Una cuenta tiene muchos movimientos
+        modelBuilder.Entity<Movimiento>()
+            .HasOne(m => m.Cuenta)
+            .WithMany(c => c.Movimientos)
+            .HasForeignKey(m => m.CuentaId);
+
+        modelBuilder.Entity<Movimiento>()
+            .Property(m => m.Monto)
+            .HasPrecision(18, 2);
     }
 }

@@ -18,4 +18,6 @@ public class Cuenta
     // Relación con Usuario
     public int UsuarioId { get; set; }
     public Usuario Usuario { get; set; } = null!;
+
+     public ICollection<Movimiento> Movimientos { get; set; } = new List<Movimiento>();
 }

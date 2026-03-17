@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PesoClaro.API.Data;
@@ -11,9 +12,11 @@ using PesoClaro.API.Data;
 namespace PesoClaro.API.Migrations
 {
     [DbContext(typeof(PesoClaroContext))]
-    partial class PesoClaroContextModelSnapshot : ModelSnapshot
+    [Migration("20260317214002_AgregaMovimientos_1.1")]
+    partial class AgregaMovimientos_11
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

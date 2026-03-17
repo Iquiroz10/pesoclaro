@@ -11,5 +11,6 @@ public class Usuario
 
     // Navegación — un usuario tiene muchas cuentas
     public ICollection<Cuenta> Cuentas { get; set; } = new List<Cuenta>();
+    public ICollection<Movimiento> Movimientos { get; set; } = new List<Movimiento>();
     
 }
