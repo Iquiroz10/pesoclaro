@@ -133,3 +133,4 @@
 /Users/irvingquiroz/Documents/pesoclaro/PesoClaro.API/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 /Users/irvingquiroz/Documents/pesoclaro/PesoClaro.API/bin/Debug/net9.0/Microsoft.IdentityModel.Tokens.dll
 /Users/irvingquiroz/Documents/pesoclaro/PesoClaro.API/bin/Debug/net9.0/System.IdentityModel.Tokens.Jwt.dll
+/Users/irvingquiroz/Documents/pesoclaro/PesoClaro.API/obj/Debug/net9.0/PesoClaro.API.sourcelink.json

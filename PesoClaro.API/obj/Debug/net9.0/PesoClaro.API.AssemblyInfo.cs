@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PesoClaro.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1eaffc6fee1d1a262065b67572384393982aa785")]
 [assembly: System.Reflection.AssemblyProductAttribute("PesoClaro.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PesoClaro.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
