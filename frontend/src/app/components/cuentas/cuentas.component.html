@@ -1,0 +1,179 @@
+<div class="cuentas-container">
+
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <button mat-icon-button (click)="regresar()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <span class="titulo">Mis cuentas</span>
+    </div>
+    <button mat-raised-button color="primary"
+            (click)="toggleFormulario()">
+      {{ mostrarFormulario ? 'Cancelar' : '+ Agregar cuenta' }}
+    </button>
+  </div>
+
+  <!-- Formulario nueva cuenta -->
+  <mat-card *ngIf="mostrarFormulario" class="card-formulario">
+    <mat-card-header>
+      <mat-card-title>Nueva cuenta</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="formulario" (ngSubmit)="guardarCuenta()">
+
+        <div class="grid-form">
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="nombre"
+                   placeholder="Ej: Nu — Ahorro">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Tipo</mat-label>
+            <mat-select formControlName="tipo">
+              <mat-option value="Liquidez">Liquidez</mat-option>
+              <mat-option value="Inversion">Inversión</mat-option>
+              <mat-option value="Deuda">Deuda</mat-option>
+              <mat-option value="Ahorro">Ahorro</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Saldo actual</mat-label>
+            <input matInput formControlName="saldo"
+                   type="number" placeholder="0.00">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Tasa anual (%)</mat-label>
+            <input matInput formControlName="tasaAnual"
+                   type="number" placeholder="0">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Tipo de tasa</mat-label>
+            <mat-select formControlName="tipoTasa">
+              <mat-option value="Rendimiento">Rendimiento</mat-option>
+              <mat-option value="Interes">Interés</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Día de corte (opcional)</mat-label>
+            <input matInput formControlName="diaDeCorteMensual"
+                   type="number" placeholder="Ej: 5">
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="campo-completo">
+          <mat-label>Notas</mat-label>
+          <input matInput formControlName="notas"
+                 placeholder="Ej: Fondo de emergencia">
+        </mat-form-field>
+
+        <div *ngIf="error" class="error-mensaje">{{ error }}</div>
+
+        <button mat-raised-button color="primary"
+                type="submit"
+                [disabled]="formulario.invalid || guardando">
+          {{ guardando ? 'Guardando...' : 'Guardar cuenta' }}
+        </button>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Cargando -->
+  <div *ngIf="cargando" class="cargando">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <!-- Lista de cuentas -->
+  <div *ngIf="!cargando">
+    <div *ngIf="cuentas.length === 0" class="sin-cuentas">
+      <p>No tienes cuentas registradas todavía.</p>
+      <p>Agrega tu primera cuenta con el botón de arriba.</p>
+    </div>
+
+    <mat-card *ngFor="let cuenta of cuentas" class="card-cuenta">
+      <mat-card-content>
+        <div class="cuenta-header">
+          <div>
+            <span class="cuenta-nombre">{{ cuenta.nombre }}</span>
+            <span [class]="'chip-tipo ' + colorTipo(cuenta.tipo)">
+              {{ cuenta.tipo }}
+            </span>
+          </div>
+          <div class="cuenta-acciones">
+            <button mat-icon-button
+                    (click)="editarSaldo(cuenta)"
+                    title="Actualizar saldo">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn"
+                    (click)="eliminarCuenta(cuenta.id)"
+                    title="Eliminar">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <!-- Editar saldo inline -->
+        <div *ngIf="cuentaEditandoId === cuenta.id" class="editar-saldo">
+          <mat-form-field appearance="outline" style="width:180px">
+            <mat-label>Nuevo saldo</mat-label>
+            <input matInput type="number" [(ngModel)]="nuevoSaldo">
+          </mat-form-field>
+          <button mat-raised-button color="primary"
+                  (click)="guardarSaldo(cuenta.id)">
+            Guardar
+          </button>
+          <button mat-button (click)="cuentaEditandoId = null">
+            Cancelar
+          </button>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="cuenta-metricas">
+          <div class="metrica">
+            <span class="metrica-label">Saldo</span>
+            <span class="metrica-valor">
+              {{ cuenta.saldo | currency:'MXN':'symbol-narrow':'1.2-2' }}
+            </span>
+          </div>
+          <div class="metrica">
+            <span class="metrica-label">Tasa anual</span>
+            <span class="metrica-valor">{{ cuenta.tasaAnual }}%</span>
+          </div>
+          <div class="metrica">
+            <span class="metrica-label">Rendimiento diario</span>
+            <span class="metrica-valor"
+                  [class.positivo]="cuenta.rendimientoDiario > 0"
+                  [class.negativo]="cuenta.rendimientoDiario < 0">
+              {{ cuenta.rendimientoDiario | currency:'MXN':'symbol-narrow':'1.2-2' }}
+            </span>
+          </div>
+          <div class="metrica">
+            <span class="metrica-label">Rendimiento mensual</span>
+            <span class="metrica-valor"
+                  [class.positivo]="cuenta.rendimientoMensual > 0"
+                  [class.negativo]="cuenta.rendimientoMensual < 0">
+              {{ cuenta.rendimientoMensual | currency:'MXN':'symbol-narrow':'1.2-2' }}
+            </span>
+          </div>
+        </div>
+
+        <p *ngIf="cuenta.notas" class="cuenta-notas">
+          {{ cuenta.notas }}
+        </p>
+        <p *ngIf="cuenta.diaDeCorteMensual" class="cuenta-corte">
+          Día de corte: {{ cuenta.diaDeCorteMensual }}
+        </p>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>

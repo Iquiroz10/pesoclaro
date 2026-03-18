@@ -22,12 +22,13 @@ export const routes: Routes = [
         .then(m => m.DashboardComponent),
     canActivate: [authGuard]
   },
-  { path: '**', redirectTo: 'login' },
   {
   path: 'cuentas',
   loadComponent: () =>
-    import('./components/cuentas/cuentas.components')
+    import('./components/cuentas/cuentas.component')
       .then(m => m.CuentasComponent),
   canActivate: [authGuard]
-},
+  },
+  { path: '**', redirectTo: 'login' },
+
 ];
