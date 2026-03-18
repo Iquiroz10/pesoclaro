@@ -80,4 +80,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
+// ── Migraciones automáticas en producción ─────────────
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<PesoClaroContext>();
+    db.Database.Migrate();
+}
+
 app.Run();
