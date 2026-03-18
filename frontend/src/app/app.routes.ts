@@ -29,6 +29,13 @@ export const routes: Routes = [
       .then(m => m.CuentasComponent),
   canActivate: [authGuard]
   },
+  {
+  path: 'movimientos',
+  loadComponent: () =>
+    import('./components/movimientos/movimientos.component')
+      .then(m => m.MovimientosComponent),
+  canActivate: [authGuard]
+  },
   { path: '**', redirectTo: 'login' },
 
 ];

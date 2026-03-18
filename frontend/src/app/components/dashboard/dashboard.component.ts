@@ -72,4 +72,8 @@ export class DashboardComponent implements OnInit {
   logout(): void {
     this.authService.logout();
   }
+
+  irAMovimientos(): void {
+  this.router.navigate(['/movimientos']);
+}
 }

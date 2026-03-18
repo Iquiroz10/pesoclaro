@@ -1,0 +1,143 @@
+.movimientos-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.titulo {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin-left: 8px;
+}
+
+.mes-label {
+  font-size: 13px;
+  color: #888;
+  margin-left: 8px;
+}
+
+.card-formulario { margin-bottom: 1.5rem; }
+
+.grid-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.cargando {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.grid-resumen {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.card-resumen { text-align: center; }
+
+.resumen-label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.resumen-valor {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.positivo { color: #00796b; }
+.negativo { color: #e53935; }
+
+.seccion-titulo {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin: 1.5rem 0 0.75rem;
+}
+
+.card-categorias { margin-bottom: 1rem; }
+
+.categoria-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 0.5px solid #f0f0f0;
+  font-size: 14px;
+}
+
+.categoria-row:last-child { border-bottom: none; }
+
+.categoria-nombre { color: #444; }
+
+.categoria-monto {
+  font-weight: 600;
+}
+
+.sin-movimientos {
+  text-align: center;
+  color: #888;
+  padding: 2rem;
+}
+
+.card-movimiento { margin-bottom: 0.5rem; }
+
+.movimiento-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.movimiento-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.movimiento-categoria {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.movimiento-descripcion {
+  font-size: 12px;
+  color: #888;
+}
+
+.movimiento-fecha {
+  font-size: 11px;
+  color: #aaa;
+}
+
+.movimiento-monto {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.movimiento-monto.ingreso { color: #00796b; }
+.movimiento-monto.gasto   { color: #e53935; }
+
+.error-mensaje {
+  color: #e53935;
+  font-size: 14px;
+  margin-bottom: 1rem;
+  padding: 8px 12px;
+  background: #ffebee;
+  border-radius: 4px;
+}

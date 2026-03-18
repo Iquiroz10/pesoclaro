@@ -1,0 +1,169 @@
+<div class="movimientos-container">
+
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <button mat-icon-button (click)="regresar()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <span class="titulo">Movimientos</span>
+      <span class="mes-label">{{ mesActual }}/{{ anioActual }}</span>
+    </div>
+    <button mat-raised-button color="primary"
+            (click)="toggleFormulario()">
+      {{ mostrarFormulario ? 'Cancelar' : '+ Registrar' }}
+    </button>
+  </div>
+
+  <!-- Formulario -->
+  <mat-card *ngIf="mostrarFormulario" class="card-formulario">
+    <mat-card-header>
+      <mat-card-title>Nuevo movimiento</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="formulario" (ngSubmit)="guardarMovimiento()">
+
+        <div class="grid-form">
+          <mat-form-field appearance="outline">
+            <mat-label>Tipo</mat-label>
+            <mat-select formControlName="tipo">
+              <mat-option value="Gasto">Gasto</mat-option>
+              <mat-option value="Ingreso">Ingreso</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Monto</mat-label>
+            <input matInput formControlName="monto"
+                   type="number" placeholder="0.00">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Categoría</mat-label>
+            <mat-select formControlName="categoria">
+              <mat-option *ngFor="let cat of categorias" [value]="cat">
+                {{ cat }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Cuenta</mat-label>
+            <mat-select formControlName="cuentaId">
+              <mat-option *ngFor="let cuenta of cuentas"
+                          [value]="cuenta.id">
+                {{ cuenta.nombre }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Fecha</mat-label>
+            <input matInput formControlName="fecha" type="date">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Descripción (opcional)</mat-label>
+            <input matInput formControlName="descripcion"
+                   placeholder="Ej: Carga completa">
+          </mat-form-field>
+        </div>
+
+        <div *ngIf="error" class="error-mensaje">{{ error }}</div>
+
+        <button mat-raised-button color="primary"
+                type="submit"
+                [disabled]="formulario.invalid || guardando">
+          {{ guardando ? 'Guardando...' : 'Guardar' }}
+        </button>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Cargando -->
+  <div *ngIf="cargando" class="cargando">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <div *ngIf="!cargando && resumen">
+
+    <!-- Resumen del mes -->
+    <div class="grid-resumen">
+      <mat-card class="card-resumen ingreso">
+        <mat-card-content>
+          <p class="resumen-label">Ingresos del mes</p>
+          <p class="resumen-valor positivo">
+            +{{ resumen.totalIngresos | currency:'MXN':'symbol-narrow':'1.2-2' }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="card-resumen gasto">
+        <mat-card-content>
+          <p class="resumen-label">Gastos del mes</p>
+          <p class="resumen-valor negativo">
+            -{{ resumen.totalGastos | currency:'MXN':'symbol-narrow':'1.2-2' }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="card-resumen">
+        <mat-card-content>
+          <p class="resumen-label">Diferencia</p>
+          <p class="resumen-valor"
+             [class.positivo]="resumen.diferencia >= 0"
+             [class.negativo]="resumen.diferencia < 0">
+            {{ resumen.diferencia | currency:'MXN':'symbol-narrow':'1.2-2' }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Gastos por categoría -->
+    <div *ngIf="categoriasTotales.length > 0">
+      <h3 class="seccion-titulo">Gastos por categoría</h3>
+      <mat-card class="card-categorias">
+        <mat-card-content>
+          <div *ngFor="let cat of categoriasTotales" class="categoria-row">
+            <span class="categoria-nombre">{{ cat.nombre }}</span>
+            <span class="categoria-monto negativo">
+              -{{ cat.monto | currency:'MXN':'symbol-narrow':'1.2-2' }}
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Historial -->
+    <h3 class="seccion-titulo">Historial del mes</h3>
+
+    <div *ngIf="resumen.movimientos.length === 0" class="sin-movimientos">
+      <p>No hay movimientos este mes.</p>
+      <p>Registra tu primer gasto o ingreso.</p>
+    </div>
+
+    <mat-card *ngFor="let mov of resumen.movimientos"
+              class="card-movimiento">
+      <mat-card-content>
+        <div class="movimiento-row">
+          <div class="movimiento-info">
+            <span class="movimiento-categoria">{{ mov.categoria }}</span>
+            <span class="movimiento-descripcion">
+              {{ mov.descripcion || mov.nombreCuenta }}
+            </span>
+            <span class="movimiento-fecha">
+              {{ mov.fecha | date:'dd/MM/yyyy' }}
+            </span>
+          </div>
+          <span class="movimiento-monto"
+                [class]="colorTipo(mov.tipo)">
+            {{ mov.tipo === 'Ingreso' ? '+' : '-' }}
+            {{ mov.monto | currency:'MXN':'symbol-narrow':'1.2-2' }}
+          </span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>
