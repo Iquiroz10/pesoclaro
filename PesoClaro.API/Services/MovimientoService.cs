@@ -31,7 +31,7 @@ public class MovimientoService
             Monto       = dto.Monto,
             Categoria   = dto.Categoria,
             Descripcion = dto.Descripcion,
-            Fecha       = dto.Fecha,
+            Fecha       = DateTime.SpecifyKind(dto.Fecha, DateTimeKind.Utc),
             CuentaId    = dto.CuentaId,
             UsuarioId   = usuarioId
         };

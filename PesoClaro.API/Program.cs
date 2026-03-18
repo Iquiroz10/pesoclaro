@@ -16,8 +16,18 @@ options.UseNpgsql(
     builder.Configuration.GetConnectionString("DefaultConnection")
 ));
 
+// ── CORS ───────────────────────────────────────────────
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PesoClaro", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 // ── Servicios ──────────────────────────────────────────
-builder.Services.AddControllers();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<CuentaService>();
 builder.Services.AddScoped<PatrimonioService>();
@@ -53,6 +63,7 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
+app.UseCors("PesoClaro");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

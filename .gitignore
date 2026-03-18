@@ -1,0 +1,14 @@
+# .NET — carpetas de compilación
+**/bin/
+**/obj/
+
+# Configuración local con datos sensibles
+**/appsettings.Development.json
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+
+# Mac
+.DS_Store
