@@ -34,7 +34,8 @@ builder.Services.AddCors(options =>
         policy
             .WithOrigins(
                 "http://localhost:4200",
-                "https://pesoclaro-production-436b.up.railway.app"
+                "https://pesoclaro-production-436b.up.railway.app",
+                "https://cute-fairy-efd45d.netlify.app"
             )
             .AllowAnyHeader()
             .AllowAnyMethod();

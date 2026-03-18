@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://tu-api-en-produccion.com/api'
+  apiUrl: 'https://pesoclaro-production-436b.up.railway.app/api'
 };
